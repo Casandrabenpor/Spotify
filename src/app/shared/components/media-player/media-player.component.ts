@@ -26,7 +26,7 @@ listObservers$:Array<Subscription> = []
           console.log('recibir cancion', response)
         }
       )
-      this.listObserver$ = [observer1$]
+      this.listObservers$ = [observer1$]
   }
   ngOnDestroy(): void {
     this.listObservers$.forEach(u => u.unsubscribe())

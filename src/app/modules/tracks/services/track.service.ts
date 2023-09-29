@@ -1,31 +1,28 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TrackModel } from '@core/models/tracks.model';
 import { Observable, of } from 'rxjs';
-import * as dataRaw from '../../../data/tracks.json'
+import { map } from 'rxjs/operators';
+import { environment } from './../../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TrackService {
-    dataTracksTrending$ : Observable<TrackModel[]> = of([])
-    dataTracksRandom$ : Observable<any> = of([])
+  private readonly URL = environment.api;
 
-  constructor() { 
-    const {data} : any = (dataRaw as any).default;
-    this.dataTracksTrending$ = of(data)
+  constructor(private httpClient: HttpClient) {}
 
-    this.dataTracksRandom$ = new Observable((observer) => {
-
-      const trackExample:TrackModel = {
-        _id:9,
-        name:'Leve',
-        album:'Cartel de Santa',
-        url:'http://',
-        cover:'https://upload.wikimedia.org/wikipedia/commons/a/a7/Cartel%2BDe%2BSanta%2B1862_carteldesanta.jpg'
-      }
-       setTimeout(() =>{
-        observer.next([trackExample])
-       },3500)
-    })
+  /**
+   * //TODO {data:[..1,...2,..2]}
+   *
+   * @returns
+   */
+  getAllTracks$(): Observable<any> {
+    return this.httpClient.get(`${this.URL}/tracks`).pipe(
+      map(({ data }: any) => {
+        return data;
+      }),
+    );
   }
 }

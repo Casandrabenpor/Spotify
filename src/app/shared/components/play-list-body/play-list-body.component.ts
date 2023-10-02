@@ -1,27 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import * as dataRaw from '../../../data/tracks.json'
+import * as dataRaw from '../../../data/tracks.json';
 import { TrackModel } from '@core/models/tracks.model';
 
 @Component({
   selector: 'app-play-list-body',
   templateUrl: './play-list-body.component.html',
-  styleUrls: ['./play-list-body.component.css']
+  styleUrls: ['./play-list-body.component.css'],
 })
 export class PlayListBodyComponent implements OnInit {
-tracks: TrackModel[] = []
-optionSort:{property:string|null,order:string} = {property:null,order:'asc'}
-  constructor(){}
+  tracks: TrackModel[] = [];
+  optionSort: { property: string | null; order: string } = {
+    property: null,
+    order: 'asc',
+  };
+  constructor() {}
   ngOnInit(): void {
-    const {data}: any = (dataRaw as any).default
+    const { data }: any = (dataRaw as any).default;
     this.tracks = data;
-      
   }
-  changeSort(property:string):void{
-    const{order} = this.optionSort
+  changeSort(property: string): void {
+    const { order } = this.optionSort;
     this.optionSort = {
-    property:property,
-    order: order === 'asc' ? 'des' : 'asc'
+      property: property,
+      order: order === 'asc' ? 'des' : 'asc',
+    };
+  }
 }
-  }
-  }
-
